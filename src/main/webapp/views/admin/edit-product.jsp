@@ -1,124 +1,203 @@
 <%@ page language="java"
     contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
 
 <%@ taglib prefix="c"
     uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
 
+<head>
+
+<meta charset="UTF-8">
 <title>Sửa sản phẩm</title>
 
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 30px;
-    }
-
-    form {
-        width: 500px;
-    }
-
-    label {
-        display: block;
-        margin-top: 12px;
-        margin-bottom: 5px;
-    }
-
-    input,
-    textarea,
-    select {
-        width: 100%;
-        padding: 8px;
-        box-sizing: border-box;
-    }
-
-    textarea {
-        height: 100px;
-    }
-
-    button {
-        margin-top: 15px;
-        padding: 10px 20px;
-    }
-</style>
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet">
 
 </head>
 
-<body>
+<body class="bg-light">
 
-<h2>Sửa sản phẩm</h2>
+<div class="container py-5">
 
-<form action="${pageContext.request.contextPath}/admin/product/edit"
-      method="post">
+<div class="card shadow-sm mx-auto"
+     style="max-width:800px;">
 
-    <input type="hidden"
-           name="productId"
-           value="${product.productId}">
+<div class="card-body p-4">
 
+    <h2 class="mb-4">
+        Sửa sản phẩm
+    </h2>
 
-    <label>Tên sản phẩm:</label>
+    <form
+        action="${pageContext.request.contextPath}/admin/product/edit"
+        method="post"
+        class="needs-validation"
+        novalidate>
 
-    <input type="text"
-           name="productName"
-           value="${product.productName}"
-           required>
+        <input
+            type="hidden"
+            name="productId"
+            value="${product.productId}">
 
+        <div class="mb-3">
 
-    <label>Hình ảnh:</label>
+            <label class="form-label">
+                Tên sản phẩm
+            </label>
 
-    <input type="text"
-           name="images"
-           value="${product.images}">
+            <input
+                type="text"
+                name="productName"
+                class="form-control"
+                value="${product.productName}"
+                minlength="2"
+                maxlength="150"
+                pattern=".*\S.*"
+                required>
 
+            <div class="invalid-feedback">
+                Tên sản phẩm phải có ít nhất 2 ký tự.
+            </div>
 
-    <label>Giá:</label>
+        </div>
 
-    <input type="number"
-           name="price"
-           value="${product.price}"
-           min="0"
-           step="0.01"
-           required>
+        <div class="mb-3">
 
+            <label class="form-label">
+                Hình ảnh
+            </label>
 
-    <label>Mô tả:</label>
+            <input
+                type="text"
+                name="images"
+                class="form-control"
+                maxlength="255"
+                value="${product.images}">
 
-    <textarea name="description">${product.description}</textarea>
+        </div>
 
+        <div class="mb-3">
 
-    <label>Danh mục:</label>
+            <label class="form-label">
+                Giá
+            </label>
 
-    <select name="cateId" required>
+            <input
+                type="number"
+                name="price"
+                class="form-control"
+                value="${product.price}"
+                min="0"
+                max="9999999999"
+                step="0.01"
+                required>
 
-        <c:forEach var="cate" items="${cateList}">
+            <div class="invalid-feedback">
+                Giá phải lớn hơn hoặc bằng 0.
+            </div>
 
-            <option value="${cate.id}"
-                ${cate.id == product.cateId ? 'selected' : ''}>
+        </div>
 
-                ${cate.name}
+        <div class="mb-3">
 
-            </option>
+            <label class="form-label">
+                Mô tả
+            </label>
 
-        </c:forEach>
+            <textarea
+                name="description"
+                class="form-control"
+                maxlength="1000"
+                rows="4">${product.description}</textarea>
 
-    </select>
+        </div>
 
+        <div class="mb-4">
 
-    <button type="submit">
-        Cập nhật
-    </button>
+            <label class="form-label">
+                Danh mục
+            </label>
 
-</form>
+            <select
+                name="cateId"
+                class="form-select"
+                required>
 
-<br>
+                <c:forEach
+                    var="cate"
+                    items="${cateList}">
 
-<a href="${pageContext.request.contextPath}/admin/product/list">
-    Quay lại danh sách
-</a>
+                    <option
+                        value="${cate.id}"
+                        ${cate.id == product.cateId ? 'selected' : ''}>
+
+                        ${cate.name}
+
+                    </option>
+
+                </c:forEach>
+
+            </select>
+
+            <div class="invalid-feedback">
+                Vui lòng chọn danh mục.
+            </div>
+
+        </div>
+
+        <div class="d-flex gap-2">
+
+            <a
+                href="${pageContext.request.contextPath}/admin/product/list"
+                class="btn btn-outline-secondary">
+
+                Quay lại
+
+            </a>
+
+            <button
+                type="submit"
+                class="btn btn-primary ms-auto">
+
+                Cập nhật
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+</div>
+</div>
+
+<script>
+
+(() => {
+
+    const form =
+        document.querySelector('.needs-validation');
+
+    form.addEventListener('submit', event => {
+
+        if (!form.checkValidity()) {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+        }
+
+        form.classList.add('was-validated');
+
+    });
+
+})();
+
+</script>
 
 </body>
 </html>

@@ -1,57 +1,137 @@
 <%@ page language="java"
     contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 <html>
 
 <head>
+
 <meta charset="UTF-8">
 <title>Thêm danh mục</title>
+
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+
 </head>
 
-<body>
+<body class="bg-light">
 
-<h2>Thêm danh mục</h2>
+<div class="container py-5">
 
-<form
-    action="${pageContext.request.contextPath}/admin/category/add"
-    method="post"
-    enctype="multipart/form-data">
+<div class="card shadow-sm mx-auto"
+     style="max-width:700px;">
 
-    <p>
-        <label>Tên danh mục:</label>
+<div class="card-body p-4">
 
-        <input
-            type="text"
-            name="name"
-            required>
-    </p>
+    <h2 class="mb-4">
+        Thêm danh mục
+    </h2>
 
-    <p>
-        <label>Ảnh đại diện:</label>
+    <form
+        action="${pageContext.request.contextPath}/admin/category/add"
+        method="post"
+        enctype="multipart/form-data"
+        class="needs-validation"
+        novalidate>
 
-        <input
-            type="file"
-            name="icon">
-    </p>
+        <div class="mb-3">
 
-    <button type="submit">
-        Thêm
-    </button>
+            <label class="form-label">
+                Tên danh mục
+            </label>
 
-    <button type="reset">
-        Hủy
-    </button>
+            <input
+                type="text"
+                name="name"
+                class="form-control"
+                minlength="2"
+                maxlength="100"
+                pattern=".*\S.*"
+                required>
 
-</form>
+            <div class="invalid-feedback">
+                Tên danh mục phải có ít nhất 2 ký tự.
+            </div>
 
-<br>
+        </div>
 
-<a href="${pageContext.request.contextPath}/admin/category/list">
-    Quay lại
-</a>
+        <div class="mb-4">
+
+            <label class="form-label">
+                Ảnh đại diện
+            </label>
+
+            <input
+                type="file"
+                name="icon"
+                class="form-control"
+                accept=".jpg,.jpeg,.png,.gif">
+
+            <div class="form-text">
+                Chỉ chọn JPG, JPEG, PNG hoặc GIF.
+            </div>
+
+        </div>
+
+        <div class="d-flex gap-2">
+
+            <a
+                href="${pageContext.request.contextPath}/admin/category/list"
+                class="btn btn-outline-secondary">
+
+                Quay lại
+
+            </a>
+
+            <button
+                type="reset"
+                class="btn btn-outline-warning">
+
+                Nhập lại
+
+            </button>
+
+            <button
+                type="submit"
+                class="btn btn-primary ms-auto">
+
+                Thêm danh mục
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+</div>
+</div>
+
+<script>
+
+(() => {
+
+    const form =
+        document.querySelector('.needs-validation');
+
+    form.addEventListener('submit', event => {
+
+        if (!form.checkValidity()) {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+        }
+
+        form.classList.add('was-validated');
+
+    });
+
+})();
+
+</script>
 
 </body>
-
 </html>
