@@ -6,6 +6,7 @@
     uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
+
 <html>
 
 <head>
@@ -14,94 +15,58 @@
 
 <title>Thông tin cá nhân</title>
 
-<link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet">
-
 <style>
-
-body {
-    background-color: #f4f6f9;
-}
 
 .profile-card {
     max-width: 760px;
-    margin: 45px auto;
+    margin: 0 auto;
     border: none;
-    border-radius: 12px;
+    border-radius: 14px;
 }
 
 .profile-title {
     font-weight: 700;
-    color: #222;
 }
 
-.avatar {
+.profile-avatar {
     width: 150px;
     height: 150px;
-    border-radius: 50%;
     object-fit: cover;
+    border-radius: 50%;
     border: 4px solid white;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 3px 15px rgba(0,0,0,0.15);
 }
 
-.avatar-empty {
+.profile-avatar-default {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-
-    background-color: #e2e8f0;
-
+    background: #e2e8f0;
     display: flex;
-    align-items: center;
     justify-content: center;
-
+    align-items: center;
     margin: auto;
-
     font-size: 55px;
 }
 
 .form-label {
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .form-control {
     min-height: 46px;
 }
 
-.button-group {
+.profile-buttons {
     display: flex;
     gap: 12px;
     margin-top: 25px;
 }
 
-.button-group .btn {
+.profile-buttons .btn {
     flex: 1;
     padding: 11px;
     font-weight: 600;
-}
-
-.btn-home {
-    background: white;
-    border: 1px solid #cbd5e1;
-    color: #334155;
-}
-
-.btn-home:hover {
-    background: #f1f5f9;
-    color: #111827;
-    border-color: #94a3b8;
-}
-
-.btn-update {
-    background: #2563eb;
-    color: white;
-    border: none;
-}
-
-.btn-update:hover {
-    background: #1d4ed8;
-    color: white;
 }
 
 </style>
@@ -117,24 +82,33 @@ body {
         <div class="card-body p-4 p-md-5">
 
             <h2 class="text-center mb-4 profile-title">
+
                 THÔNG TIN CÁ NHÂN
+
             </h2>
+
 
             <c:if test="${param.success == '1'}">
 
                 <div class="alert alert-success">
+
                     Cập nhật thông tin thành công.
+
                 </div>
 
             </c:if>
+
 
             <c:if test="${not empty error}">
 
                 <div class="alert alert-danger">
+
                     ${error}
+
                 </div>
 
             </c:if>
+
 
             <div class="text-center mb-4">
 
@@ -143,16 +117,18 @@ body {
                     <c:when test="${not empty user.images}">
 
                         <img
+                            class="profile-avatar"
                             src="${pageContext.request.contextPath}/${user.images}"
-                            class="avatar"
                             alt="Ảnh đại diện">
 
                     </c:when>
 
                     <c:otherwise>
 
-                        <div class="avatar-empty">
+                        <div class="profile-avatar-default">
+
                             👤
+
                         </div>
 
                     </c:otherwise>
@@ -161,6 +137,7 @@ body {
 
             </div>
 
+
             <form
                 action="${pageContext.request.contextPath}/profile"
                 method="post"
@@ -168,10 +145,13 @@ body {
                 class="needs-validation"
                 novalidate>
 
+
                 <div class="mb-3">
 
                     <label class="form-label">
+
                         Email
+
                     </label>
 
                     <input
@@ -182,10 +162,13 @@ body {
 
                 </div>
 
+
                 <div class="mb-3">
 
                     <label class="form-label">
+
                         Họ và tên
+
                     </label>
 
                     <input
@@ -198,15 +181,20 @@ body {
                         required>
 
                     <div class="invalid-feedback">
-                        Vui lòng nhập họ và tên.
+
+                        Họ và tên không được để trống.
+
                     </div>
 
                 </div>
 
+
                 <div class="mb-3">
 
                     <label class="form-label">
+
                         Số điện thoại
+
                     </label>
 
                     <input
@@ -218,15 +206,21 @@ body {
                         maxlength="10">
 
                     <div class="invalid-feedback">
-                        Số điện thoại phải gồm 10 số và bắt đầu bằng 0.
+
+                        Số điện thoại phải gồm 10 số
+                        và bắt đầu bằng 0.
+
                     </div>
 
                 </div>
 
+
                 <div class="mb-3">
 
                     <label class="form-label">
+
                         Ảnh đại diện
+
                     </label>
 
                     <input
@@ -236,16 +230,20 @@ body {
                         accept=".jpg,.jpeg,.png,.gif">
 
                     <div class="form-text">
-                        Chọn JPG, JPEG, PNG hoặc GIF. Tối đa 5MB.
+
+                        Chọn JPG, JPEG, PNG hoặc GIF.
+                        Tối đa 5MB.
+
                     </div>
 
                 </div>
 
-                <div class="button-group">
+
+                <div class="profile-buttons">
 
                     <a
                         href="${pageContext.request.contextPath}/home"
-                        class="btn btn-home">
+                        class="btn btn-outline-secondary">
 
                         ← Quay lại trang chủ
 
@@ -253,7 +251,7 @@ body {
 
                     <button
                         type="submit"
-                        class="btn btn-update">
+                        class="btn btn-primary">
 
                         Cập nhật thông tin
 
@@ -268,44 +266,6 @@ body {
     </div>
 
 </div>
-
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-</script>
-
-<script>
-
-(() => {
-
-    'use strict';
-
-    const forms =
-        document.querySelectorAll('.needs-validation');
-
-    Array.from(forms).forEach(form => {
-
-        form.addEventListener(
-            'submit',
-            event => {
-
-                if (!form.checkValidity()) {
-
-                    event.preventDefault();
-                    event.stopPropagation();
-
-                }
-
-                form.classList.add('was-validated');
-
-            },
-            false
-        );
-
-    });
-
-})();
-
-</script>
 
 </body>
 
